@@ -46,23 +46,19 @@ class SusDetector {
         
         while (!isValidSelectionMade) {
             clearScreen();
-            System.out.println("Welcome to the SusDetector Intrusion Detection System.");
-            System.out.println();
-            System.out.println("Select a module to continue.");
-            System.out.println();
-            System.out.println(" +---+----------------------------+");
-            System.out.println(" | 1 | Activity Simulation Engine |");
-            System.out.println(" +---+----------------------------+");
-            System.out.println(" | 2 | Analysis Engine            |");
-            System.out.println(" +---+----------------------------+");
-            System.out.println(" | 3 | Alert Engine               |");
-            System.out.println(" +---+----------------------------+");
-            System.out.println(" | 4 | Quit                       |");
-            System.out.println(" +---+----------------------------+");
-            System.out.println();
+            System.out.println("Welcome to the SusDetector Intrusion Detection System.\n\n" + 
+                               "Select a module to continue.\n\n" + 
+                               " +---+----------------------------+\n" + 
+                               " | 1 | Activity Simulation Engine |\n" + 
+                               " +---+----------------------------+\n" + 
+                               " | 2 | Analysis Engine            |\n" + 
+                               " +---+----------------------------+\n" + 
+                               " | 3 | Alert Engine               |\n" + 
+                               " +---+----------------------------+\n" + 
+                               " | 4 | Quit                       |\n" + 
+                               " +---+----------------------------+\n");
             if (isPreviousSelectionInvalid) {
-                System.out.println("Invalid selection, please try again.");
-                System.out.println();
+                System.out.println("Invalid selection, please try again.\n");
             }
             System.out.print("Your selection: ");
             
