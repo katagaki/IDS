@@ -6,80 +6,16 @@ class SusDetector {
     
     public static void main(String[] args) {
         Boolean isProgramGoingToQuit = false;
-        int selection = -1;
         
-        clearScreen();
         System.out.println("Loading initial input...");
-        // TODO: Do initial input
+        // TODO: Read initial input
+        // TODO: Check initial input for consistencies
+        // TODO: Generate 'baseline' data: the initial set of per-day event statistics that are considered acceptable
         
         while (!isProgramGoingToQuit) {
-            selection = printMenu();
-            switch (selection) {
-            case 1:
-                // TODO: Implement activity simulation engine
-                break;
-                
-            case 2:
-                // TODO: Implement analysis engine
-                break;
-                
-            case 3:
-                // TODO: Implement alert engine
-                break;
-                
-            case 4:
-                isProgramGoingToQuit = true;
-                break;
-            }
+            isProgramGoingToQuit = true;
         }
         
-        clearScreen();
-        System.out.println("Thank you for using SusDetector!");
-        System.out.println();
-    }
-    
-    private static int printMenu() {
-        Scanner s = new Scanner(System.in);
-        Boolean isValidSelectionMade = false;
-        Boolean isPreviousSelectionInvalid = false;
-        int selection = -1;
-        
-        while (!isValidSelectionMade) {
-            clearScreen();
-            System.out.println("Welcome to the SusDetector Intrusion Detection System.\n\n" + 
-                               "Select a module to continue.\n\n" + 
-                               " +---+----------------------------+\n" + 
-                               " | 1 | Activity Simulation Engine |\n" + 
-                               " +---+----------------------------+\n" + 
-                               " | 2 | Analysis Engine            |\n" + 
-                               " +---+----------------------------+\n" + 
-                               " | 3 | Alert Engine               |\n" + 
-                               " +---+----------------------------+\n" + 
-                               " | 4 | Quit                       |\n" + 
-                               " +---+----------------------------+\n");
-            if (isPreviousSelectionInvalid) {
-                System.out.println("Invalid selection, please try again.\n");
-            }
-            System.out.print("Your selection: ");
-            
-            if (s.hasNextInt()) {
-                selection = s.nextInt();
-            } else {
-                s.nextLine();
-            }
-            
-            if (selection >= 1 && selection <= 4) {
-                isValidSelectionMade = true;
-            } else {
-                isPreviousSelectionInvalid = true;
-            }
-        }
-        
-        return selection;
-    }   
-    
-    private static void clearScreen() {
-        System.out.print("\033[H\033[2J");
     }
     
 }
