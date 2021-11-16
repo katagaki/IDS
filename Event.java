@@ -26,7 +26,7 @@ class Event {
         }
     }
     
-    private int generateDiscrete() {
+    public int generateDiscrete() {
         Random rand = new Random(System.currentTimeMillis());
         int min = 0;
         int max = 0;
@@ -41,7 +41,7 @@ class Event {
         intValue = rand.ints(min, max + 1).findFirst().getAsInt();
     }
     
-    private Double generateContinuous() {
+    public Double generateContinuous() {
         Random rand = new Random(System.currentTimeMillis());
         int x = rand.nextInt(info.max - info.min) + info.min;
         Double y = (rand.nextInt(1001) - 1000) / 1000.0;

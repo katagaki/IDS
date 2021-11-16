@@ -2,7 +2,7 @@ class ActivityEngine {
     
     public int countOfDays = 0;
     public Event[] inputEvents = [];
-    public Event[] generatedEvents = [];
+    public Day[] generatedDays = [];
     
     public ActivityEngine(Event[] inputEvents, Stats[] inputStats, int countOfDays) {
         this.inputEvents = inputEvents;
@@ -11,15 +11,17 @@ class ActivityEngine {
     }
     
     public void generateEvents() {
-        Event[] newEvents = [];
-        for (event in events) {
-            Event newEvent = Event("TimeOnline", event.info, Stats());
-            // TODO: Do calculation
-            Stats newStats = Stats(mean, stdDev);
-            newEvent.stats = newStats;
-            newEvents.append(newEvent);
+        for (int i = 0; i < countOfDays; i++) {
+            Day newDay = Day();
+            for (event in events) {
+                Event newEvent = Event("TimeOnline", event.info, Stats());
+                // TODO: Do calculation
+                Stats newStats = Stats(mean, stdDev);
+                newEvent.stats = newStats;
+                newDay.events.append(newEvent);
+            }
+            generatedDays.append(newDay);
         }
-        generatedEvents = newEvents;
     }
     
 }
