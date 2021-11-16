@@ -1,13 +1,8 @@
 class ActivityEngine {
     
-    // Input
-    private Event[] inputEvents = [];
-    private Stats[] inputStats = [];
-    
-    // Output
     public int countOfDays = 0;
-    public Event[] events = [];
-    public Stats[] stats = [];
+    public Event[] inputEvents = [];
+    public Event[] generatedEvents = [];
     
     public ActivityEngine(Event[] inputEvents, Stats[] inputStats, int countOfDays) {
         this.inputEvents = inputEvents;
@@ -16,7 +11,15 @@ class ActivityEngine {
     }
     
     public void generateEvents() {
-        
+        Event[] newEvents = [];
+        for (event in events) {
+            Event newEvent = Event("TimeOnline", event.info, Stats());
+            // TODO: Do calculation
+            Stats newStats = Stats(mean, stdDev);
+            newEvent.stats = newStats;
+            newEvents.append(newEvent);
+        }
+        generatedEvents = newEvents;
     }
     
 }
