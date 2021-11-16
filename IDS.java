@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 // The main class for the program
 
-class SusDetector {
+class IDS {
     
     public static void main(String[] args) {
         Boolean isProgramGoingToQuit = false;
