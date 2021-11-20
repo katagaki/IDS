@@ -22,7 +22,20 @@ class IDS {
                 if (numberOfEventsInEventsFile == -1) {
                     numberOfEventsInEventsFile = Integer.parseInt(line);
                 } else {
-                    // TODO: Read each line
+                    // Parse line split by colons
+                    String[] lineSplitByColon = line.split(":");
+                    String eventName = lineSplitByColon[0];
+                    String eventType = lineSplitByColon[1];
+                    String eventMin = lineSplitByColon[2];
+                    String eventMax = lineSplitByColon[3];
+                    String eventWeight = lineSplitByColon[4];
+                    EventInfo newEventInfo = new EventInfo((eventType == "C" ? EventType.Continuous : EventType.Discrete),
+                                                           (eventMin == "" ? 0.0 : Double.parseDouble(eventMin)),
+                                                           (eventMax == "" ? 0.0 : Double.parseDouble(eventMax)),
+                                                           (eventMin == "" ? true : false),
+                                                           (eventMax == "" ? true : false),
+                                                           Integer.parseInt(eventWeight));
+                    Event newEvent = new Event(eventName, newEventInfo, new Stats());
                 }
             }
         } catch (IOException e) {
