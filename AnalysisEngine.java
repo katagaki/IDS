@@ -14,6 +14,8 @@ public class AnalysisEngine {
 	
 	public double [] AnalysisOfEventStat(String filename) throws FileNotFoundException {
 		
+		System.out.println("Generate log file completed start analysis");
+		
 		
 		
 	}
