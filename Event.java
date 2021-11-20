@@ -58,7 +58,8 @@ class Event {
     }
     
     private Double calculateSkewFactor() {
-        return 0.9 / ((info.max - info.min) / stats.mean);
+        Double probability = 1.0 / Math.ceil(event.max / stats.mean);
+        return 1.0 - probability;
     }
     
 }
