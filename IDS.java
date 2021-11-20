@@ -41,8 +41,8 @@ class IDS {
                         EventInfo newEventInfo = new EventInfo((eventType.equals("C") ? EventType.Continuous : EventType.Discrete),
                                                                (eventMin.equals("") ? 0.0 : Double.parseDouble(eventMin)),
                                                                (eventMax.equals("") ? 0.0 : Double.parseDouble(eventMax)),
-                                                               (eventMin.equals("") ? true : false),
-                                                               (eventMax.equals("") ? true : false),
+                                                               (eventMin.equals("") ? false : true),
+                                                               (eventMax.equals("") ? false : true),
                                                                Integer.parseInt(eventWeight));
                         inputEvents[i - 1] = new Event(eventName, newEventInfo, new Stats());
                     }
@@ -87,12 +87,6 @@ class IDS {
         
         System.out.println("Number of events loaded: " + String.valueOf(inputEvents.length));
         
-        System.out.println();
-        for (Event event : inputEvents) {
-            System.out.println(event);
-        }
-        System.out.println();
-        
         System.out.println("Checking for inconsistencies...");
         // Ensure that number of events declared match between 2 files
         if (numberOfEventsDeclaredInEventsFile != numberOfEventsDeclaredInStatsFile) {
@@ -123,9 +117,12 @@ class IDS {
         System.out.println("Generating 'baseline' data...");
         ActivityEngine activityEngine = new ActivityEngine(inputEvents, numberOfDays);
         activityEngine.generateEvents();
-        for (Day day : activityEngine.generatedDays) {
-            System.out.println(day);
-        }
+        
+        // TODO: Run analysis engine on 'baseline' data
+        
+        // TODO: Run activity engine again to generate new set of data for analysis
+        
+        // TODO: Run alert engine on new set of data
         
         while (!isProgramGoingToQuit) {
             isProgramGoingToQuit = true;

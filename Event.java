@@ -7,8 +7,8 @@ public class Event {
     private SecureRandom rand;
     public String name;
     public EventInfo info;
-    public int intValue;
-    public Double doubleValue;
+    public int intValue = 0;
+    public Double doubleValue = 0.0;
     public Stats stats;
     
     public Event() {
@@ -24,6 +24,9 @@ public class Event {
         } catch (NoSuchAlgorithmException e) {
             System.out.println("!!! This device does not support secure random number generation!");
         }
+    }
+    
+    public void generate() {
         switch (info.eventType) {
             case Discrete:
                 intValue = generateDiscrete();
@@ -34,7 +37,7 @@ public class Event {
         }
     }
     
-    public int generateDiscrete() {
+    private int generateDiscrete() {
         Double min = 0.0;
         Double max = 0.0;
         if (info.minExists) {
@@ -48,7 +51,7 @@ public class Event {
         return rand.ints(min.intValue(), max.intValue() + 1).findFirst().getAsInt();
     }
     
-    public Double generateContinuous() {
+    private Double generateContinuous() {
         Double x = rand.nextDouble(info.max - info.min) + info.min;
         Double y = (rand.nextInt(1001) - 1000) / 1000.0;
         if (x > stats.mean) {

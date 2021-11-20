@@ -21,6 +21,7 @@ public class ActivityEngine {
                 // Create event modelled after existing event
                 Event event = inputEvents[j];
                 Event newEvent = new Event(event.name, event.info, event.stats);
+                newEvent.generate();
                 newDay.events[j] = newEvent;
             }
             
