@@ -1,0 +1,6 @@
+5
+LoginCount:4:1.5:
+OnlineTime:150.5:25.00:
+SentEmailCount:10:3:
+OpenedEmailCount:12:4.5:
+DeletedEmailCount:7:2.25:
