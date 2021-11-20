@@ -1,14 +1,14 @@
-class EventInfo {
+public class EventInfo {
     
     public EventType eventType;
     public Double min;
     public Double max;
     public Boolean minExists;
     public Boolean maxExists;
-    public int weight;
+    public int weight = 1;
     
     public EventInfo() {
-        Event(EventType.Discrete, 0, 0, 0);
+        this(EventType.Discrete, 0.0, 0.0, false, false, 1);
     }
     
     public EventInfo(EventType eventType,
@@ -25,9 +25,4 @@ class EventInfo {
         this.weight = weight;
     }
     
-}
-
-enum EventType {
-    Discrete,
-    Continuous
 }
