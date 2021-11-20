@@ -1,7 +1,10 @@
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.Random;
 
 public class Event {
     
+    private SecureRandom rand;
     public String name;
     public EventInfo info;
     public int intValue;
@@ -16,6 +19,11 @@ public class Event {
         this.name = name;
         this.info = info;
         this.stats = stats;
+        try {
+            rand = SecureRandom.getInstance("NativePRNG");
+        } catch (NoSuchAlgorithmException e) {
+            System.out.println("!!! This device does not support secure random number generation!");
+        }
         switch (info.eventType) {
             case Discrete:
                 intValue = generateDiscrete();
@@ -27,7 +35,6 @@ public class Event {
     }
     
     public int generateDiscrete() {
-        Random rand = new Random(System.currentTimeMillis());
         Double min = 0.0;
         Double max = 0.0;
         if (info.minExists) {
@@ -42,7 +49,6 @@ public class Event {
     }
     
     public Double generateContinuous() {
-        Random rand = new Random(System.currentTimeMillis());
         Double x = rand.nextDouble(info.max - info.min) + info.min;
         Double y = (rand.nextInt(1001) - 1000) / 1000.0;
         if (x > stats.mean) {
@@ -60,6 +66,11 @@ public class Event {
     private Double calculateSkewFactor() {
         Double probability = 1.0 / Math.ceil(info.max / stats.mean);
         return 1.0 - probability;
+    }
+    
+    @Override
+    public String toString() {
+        return name.substring(0, 8) + "\t" + String.valueOf(info.min) + "\t" + String.valueOf(info.max) + "\t" + String.valueOf(info.weight) + "\t" + String.valueOf(stats.mean) + "\t" + String.valueOf(stats.stdDev);
     }
     
 }

@@ -6,7 +6,8 @@ public class Day {
     
     public Day() { }
     
-    public String outputString() {
+    @Override
+    public String toString() {
         String output = "";
         
         for (Event event : events) {

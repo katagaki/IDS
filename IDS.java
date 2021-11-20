@@ -11,12 +11,14 @@ class IDS {
         Boolean isProgramGoingToQuit = false;
         String eventsFileName = args[0];
         String statsFileName = args[1];
-        String numberOfDays = args[2];
+        int numberOfDays = Integer.parseInt(args[2]);
         int numberOfEventsDeclaredInEventsFile = -1;
         int numberOfEventsDeclaredInStatsFile = -1;
         int numberOfEventsParsedInEventsFile = 0;
         int numberOfEventsParsedInStatsFile = 0;
         Event[] inputEvents = {};
+        
+        // TODO: Validate command line arguments
         
         System.out.print("Loading initial event data...");
         try {
@@ -36,11 +38,11 @@ class IDS {
                         String eventMin = lineSplitByColon[2];
                         String eventMax = lineSplitByColon[3];
                         String eventWeight = lineSplitByColon[4];
-                        EventInfo newEventInfo = new EventInfo((eventType == "C" ? EventType.Continuous : EventType.Discrete),
-                                                               (eventMin == "" ? 0.0 : Double.parseDouble(eventMin)),
-                                                               (eventMax == "" ? 0.0 : Double.parseDouble(eventMax)),
-                                                               (eventMin == "" ? true : false),
-                                                               (eventMax == "" ? true : false),
+                        EventInfo newEventInfo = new EventInfo((eventType.equals("C") ? EventType.Continuous : EventType.Discrete),
+                                                               (eventMin.equals("") ? 0.0 : Double.parseDouble(eventMin)),
+                                                               (eventMax.equals("") ? 0.0 : Double.parseDouble(eventMax)),
+                                                               (eventMin.equals("") ? true : false),
+                                                               (eventMax.equals("") ? true : false),
                                                                Integer.parseInt(eventWeight));
                         inputEvents[i - 1] = new Event(eventName, newEventInfo, new Stats());
                     }
@@ -69,7 +71,7 @@ class IDS {
                         Stats newStats = new Stats(Double.parseDouble(eventMean),
                                                    Double.parseDouble(eventStdDev));
                         for (Event event : inputEvents) {
-                            if (event.name == eventName) {
+                            if (event.name.equals(eventName)) {
                                 event.stats = newStats;
                                 break;
                             }
@@ -84,6 +86,12 @@ class IDS {
         System.out.println(" done.\n");
         
         System.out.println("Number of events loaded: " + String.valueOf(inputEvents.length));
+        
+        System.out.println();
+        for (Event event : inputEvents) {
+            System.out.println(event);
+        }
+        System.out.println();
         
         System.out.println("Checking for inconsistencies...");
         // Ensure that number of events declared match between 2 files
@@ -111,7 +119,13 @@ class IDS {
         //       - Continous events must be 2 decimal places
         //       - All values must be positive
         
-        // TODO: Generate 'baseline' data: the initial set of per-day event statistics that are considered acceptable
+        // Generate 'baseline' data: the initial set of per-day event statistics that are considered acceptable
+        System.out.println("Generating 'baseline' data...");
+        ActivityEngine activityEngine = new ActivityEngine(inputEvents, numberOfDays);
+        activityEngine.generateEvents();
+        for (Day day : activityEngine.generatedDays) {
+            System.out.println(day);
+        }
         
         while (!isProgramGoingToQuit) {
             isProgramGoingToQuit = true;
