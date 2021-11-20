@@ -11,15 +11,17 @@ class ActivityEngine {
     }
     
     public void generateEvents() {
+        // Process each day
         for (int i = 0; i < countOfDays; i++) {
             Day newDay = Day();
+            
+            // Process each event for each day
             for (event in events) {
-                Event newEvent = Event("TimeOnline", event.info, Stats());
-                // TODO: Do calculation
-                Stats newStats = Stats(mean, stdDev);
-                newEvent.stats = newStats;
+                // Create event modelled after existing event
+                Event newEvent = Event(event.name, event.info, event.stats);
                 newDay.events.append(newEvent);
             }
+            
             generatedDays.append(newDay);
         }
     }
