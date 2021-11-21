@@ -1,6 +1,9 @@
 import java.io.FileWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.text.DecimalFormat;
+
 
 public class AnalysisEngine {
 	
@@ -13,7 +16,7 @@ public class AnalysisEngine {
 	// averages.put("EventName", average);
 	// averages.get("EventName"); --> return Double
 	
-	public AnalysisEnginer (Day[] days) {
+	public AnalysisEngine (Day[] days) {
 		
 		this.days = days;
 		dailyTotals = new Double[days.length];
@@ -38,7 +41,7 @@ public class AnalysisEngine {
 			// Convert events per day to days per event
 			for (Event event : days[i].events) {
 				if (!events.containsKey(event.name)) {
-					events.put(event.name, {event});
+					events.put(event.name, new Event[] {event});
 				} else {
 					events.get(event.name).add(event);
 				}
@@ -98,7 +101,7 @@ public class AnalysisEngine {
 		try {       
 	        FileWriter writer = new FileWriter("NewStats.txt");
 	        writer.append(output);
-	        writer.flush();
+	        writer.flush();	
 	        writer.close();
 	    } catch (Exception e) {
 	        e.printStackTrace();
