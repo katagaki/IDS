@@ -13,14 +13,9 @@ public class AnalysisEngine {
 	public Map<String, Double> averages = new HashMap<String, Double>();
 	public Map<String, Double> stdDevs = new HashMap<String, Double>();
 	
-	// averages.put("EventName", average);
-	// averages.get("EventName"); --> return Double
-	
 	public AnalysisEngine (Day[] days) {
-		
 		this.days = days;
 		dailyTotals = new Double[days.length];
-		analyzedValues = new Double[days.length];
 	}
 	
 	public void analyze() {
@@ -28,7 +23,7 @@ public class AnalysisEngine {
 		// Calculate daily totals per day
 		for (int i = 0; i < days.length; i++) {
 			
-			Double sum = 0;
+			Double sum = 0.0;
 			for (Event event : days[i].events) {
 				if (event.info.eventType == EventType.Discrete) {
 					sum += (double)event.intValue;
@@ -41,7 +36,9 @@ public class AnalysisEngine {
 			// Convert events per day to days per event
 			for (Event event : days[i].events) {
 				if (!events.containsKey(event.name)) {
-					events.put(event.name, new Event[] {event});
+                    ArrayList<Event> newArrayList = new ArrayList<Event>();
+                    newArrayList.add(event);
+					events.put(event.name, newArrayList);
 				} else {
 					events.get(event.name).add(event);
 				}
@@ -49,32 +46,34 @@ public class AnalysisEngine {
 			
 		}
 		
+        // Calculate average and standard deviation per event
 		for (String key : events.keySet()) {
 			ArrayList<Event> eventArray = events.get(key);
 			ArrayList<Double> eventValues = new ArrayList<Double>();
 			for (Event event : eventArray) {
 				if (event.info.eventType == EventType.Discrete) {
-					eventValues.add((Double)event.intValue);
+					eventValues.add((double)event.intValue);
 				} else {
 					eventValues.add(event.doubleValue);
 				}
 			}
 			// Calculate standard deviation for each event
-			Double average = avg(eventValues.toArray());
-			Double stdDev = stdDev(eventValues.toArray());
+			Double average = avg(eventValues.toArray(Double[]::new));
+			Double stdDev = stdDev(eventValues.toArray(Double[]::new));
 			
-			averages.put(event.name, average);
-			stdDevs.put(event.name, stdDev);
+			averages.put(key, average);
+			stdDevs.put(key, stdDev);
 			
 		}
 		
+        // Analyze and set the analyzed value for each event datapoint
 		for (int i = 0; i < days.length; i++) {
 			
 			for (int j = 0; j < days[i].events.length; j++) {
 				Event event = days[i].events[j];
 				Double eventValue = 0.0;
 				if (event.info.eventType == EventType.Discrete) {
-					eventValue = (Double)event.intValue;
+					eventValue = (double)event.intValue;
 				} else {
 					eventValue = event.doubleValue;
 				}
@@ -120,7 +119,7 @@ public class AnalysisEngine {
         	stdDev += Math.pow(num - mean, 2);
         }
 
-        return Math.sqrt(stdDev/length);
+        return Math.sqrt(stdDev / numArray.length);
     }
 	
 	public Double avg(Double numArray[]) {
