@@ -1,3 +1,4 @@
 clear
+rm *.class
 javac *.java
 java IDS TestData/Events.txt TestData/Stats.txt 5
