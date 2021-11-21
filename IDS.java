@@ -119,6 +119,9 @@ class IDS {
         activityEngine.generateEvents();
         
         // TODO: Run analysis engine on 'baseline' data
+        AnalysisEngine analysisEngine = new AnalysisEngine(activityEngine.generatedDays);
+        analysisEngine.analyze();
+        analysisEngine.saveStatsFile();
         
         // TODO: Run activity engine again to generate new set of data for analysis
         
