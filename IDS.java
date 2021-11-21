@@ -98,6 +98,7 @@ class IDS {
         
         // TODO: Run alert engine on new set of data
         
+        // TODO: Use a loop to keep 'training' the IDS
         while (!isProgramGoingToQuit) {
             isProgramGoingToQuit = true;
         }
