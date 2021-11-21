@@ -52,7 +52,7 @@ public class Event {
     }
     
     private Double generateContinuous() {
-        Double x = rand.nextDouble(info.max - info.min) + info.min;
+        Double x = (rand.nextDouble() * (info.max - info.min)) + info.min;
         Double y = (rand.nextInt(1001) - 1000) / 1000.0;
         if (x > stats.mean) {
             Double skewFactor = calculateSkewFactor();
