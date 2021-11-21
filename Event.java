@@ -10,6 +10,7 @@ public class Event {
     public int intValue = 0;
     public Double doubleValue = 0.0;
     public Stats stats;
+    public Double analyzedValue = 0.0;
     
     public Event() {
         this("", new EventInfo(), new Stats());
