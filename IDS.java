@@ -8,7 +8,9 @@ import java.util.stream.Stream;
 class IDS {
     
     public static void main(String[] args) {
+        
         Boolean isProgramGoingToQuit = false;
+        Scanner s = new Scanner(System.in);
         String eventsFileName = args[0];
         String statsFileName = args[1];
         int numberOfDays = Integer.parseInt(args[2]);
@@ -16,6 +18,8 @@ class IDS {
         String consistencyCheckReport = "";
         String[] eventsLines = new String[]{};
         String[] statsLines = new String[]{};
+        
+        clearScreen();
         
         // TODO: Validate command line arguments
         
@@ -100,7 +104,17 @@ class IDS {
         
         // TODO: Use a loop to keep 'training' the IDS
         while (!isProgramGoingToQuit) {
-            isProgramGoingToQuit = true;
+            
+            // TODO: Read in another set of Stats.txt and number of days
+            
+            // TODO: Perform process again
+            
+            System.out.print("Continue analyzing another set of data? (Y/N) ");
+            
+            String input = s.next();
+            if (!input.equalsIgnoreCase("Y")) {
+                isProgramGoingToQuit = true;
+            }
         }
         
     }
@@ -159,6 +173,10 @@ class IDS {
     
     public static void saveDayFile(Day day, String outputFileName) {
         
+    }
+    
+    private static void clearScreen() {
+        System.out.print("\033[H\033[2J");
     }
     
 }
