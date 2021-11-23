@@ -131,10 +131,7 @@ class IDS {
             System.out.println();
             
             // Run alert engine on new set of data
-            AlertEngine alertEngine = new AlertEngine(inputEvents,
-                                                      secondaryActivityEngine.generatedDays,
-                                                      primaryAnalysisEngine.averages,
-                                                      primaryAnalysisEngine.stdDevs);
+            AlertEngine alertEngine = new AlertEngine(inputEvents, secondaryActivityEngine.generatedDays);
             alertEngine.genDailyCount();
             System.out.println("Threshold for alarm: " + Integer.toString(alertEngine.threshold));
             alertEngine.detectAnomaly();
