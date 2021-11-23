@@ -1,5 +1,7 @@
 import java.io.FileWriter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 import java.text.DecimalFormat;
@@ -85,11 +87,11 @@ public class AnalysisEngine {
 	
 	public void saveStatsFile() {
 		
-	     String output = "";
+	     String output = Integer.toString(events.size()) + "\n";
 	     
 	     // Generate and append event info to output
 	     for (String key : events.keySet()) {
-	    	 DecimalFormat df = new DecimalFormat("#.00");
+	    	 DecimalFormat df = new DecimalFormat("0.00");
 	    	 Double average = averages.get(key);
 	    	 Double stdDev = stdDevs.get(key);
 	    	 String eventLine = key + ":" + df.format(average) + ":" + df.format(stdDev) + ":";
@@ -97,18 +99,19 @@ public class AnalysisEngine {
 	     }
 	    
 	    // Save stats output to file
-		try {       
-	        FileWriter writer = new FileWriter("NewStats.txt");
+		try {
+            String filename = getEpochTimeString() + "-Stats.txt";
+	        FileWriter writer = new FileWriter(filename);
 	        writer.append(output);
 	        writer.flush();	
 	        writer.close();
+            System.out.println("New stats data saved to '" + filename + "'.");
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	    }
 
 	}
-
-	
+    
 	// From https://www.programiz.com/java-programming/examples/standard-deviation
 	public Double stdDev(Double numArray[])
     {
@@ -134,6 +137,9 @@ public class AnalysisEngine {
         return sum/length;
 
 	}
-
+    
+    private String getEpochTimeString() {
+        return new SimpleDateFormat("yyyymmddHHmmss").format(Calendar.getInstance().getTime());
+    }
 	
 }

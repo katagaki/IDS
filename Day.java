@@ -11,7 +11,7 @@ public class Day {
         String output = "";
         
         for (Event event : events) {
-            DecimalFormat df = new DecimalFormat("#.00");
+            DecimalFormat df = new DecimalFormat("0.00");
             output = output + event.name + ":";
             switch (event.info.eventType) {
                 case Discrete:

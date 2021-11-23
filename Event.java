@@ -73,7 +73,7 @@ public class Event {
     
     @Override
     public String toString() {
-        return name.substring(0, 8) + "\t" + String.valueOf(info.min) + "\t" + String.valueOf(info.max) + "\t" + String.valueOf(info.weight) + "\t" + String.valueOf(stats.mean) + "\t" + String.valueOf(stats.stdDev);
+        return name.substring(0, 8) + "\t" + String.valueOf(info.min) + "\t" + String.valueOf(info.max) + "\t" + String.valueOf(info.weight) + "\t" + String.valueOf(stats.mean) + "\t" + String.valueOf(stats.stdDev)+ "\t" + String.valueOf(analyzedValue);
     }
     
 }

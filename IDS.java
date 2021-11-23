@@ -10,7 +10,6 @@ class IDS {
     public static void main(String[] args) {
         
         Boolean isProgramGoingToQuit = false;
-        Scanner s = new Scanner(System.in);
         String eventsFileName = args[0];
         String statsFileName = args[1];
         int numberOfDays = Integer.parseInt(args[2]);
@@ -51,29 +50,7 @@ class IDS {
         System.out.println(" done.");
         
         System.out.print("Loading initial event stats data...");
-        try {
-            statsLines = new FileArrayProvider().readLines(Paths.get(statsFileName).normalize().toString());
-            for (String line : statsLines) {
-                // Parse line split by colons
-                String[] lineSplitByColon = line.split(":");
-                if (lineSplitByColon.length == 3) {
-                    String eventName = lineSplitByColon[0];
-                    String eventMean = lineSplitByColon[1];
-                    String eventStdDev = lineSplitByColon[2];
-                    Stats newStats = new Stats(Double.parseDouble(eventMean),
-                                               Double.parseDouble(eventStdDev));
-                    for (Event event : inputEvents) {
-                        if (event.name.equals(eventName)) {
-                            event.stats = newStats;
-                            break;
-                        }
-                    }
-                }
-            }
-        } catch (IOException e) {
-            System.out.println("\n!!! Could not parse event stats data!\n\nStack trace:\n");
-            e.printStackTrace();
-        }
+        statsLines = loadStats(inputEvents, statsFileName);
         System.out.println(" done.\n");
         
         System.out.println("Number of events loaded: " + String.valueOf(inputEvents.length));
@@ -89,25 +66,70 @@ class IDS {
         
         // Generate 'baseline' data: the initial set of per-day event statistics that are considered acceptable
         System.out.println("Generating 'baseline' data...");
-        ActivityEngine activityEngine = new ActivityEngine(inputEvents, numberOfDays);
-        activityEngine.generateEvents();
+        ActivityEngine primaryActivityEngine = new ActivityEngine(inputEvents, numberOfDays);
+        primaryActivityEngine.generateEvents();
+        primaryActivityEngine.saveDayFiles();
         
         // Run analysis engine on 'baseline' data
         System.out.println("Generating analyzed data based on 'baseline' data...");
-        AnalysisEngine analysisEngine = new AnalysisEngine(activityEngine.generatedDays);
-        analysisEngine.analyze();
-        analysisEngine.saveStatsFile();
-        
-        // TODO: Run activity engine again to generate new set of data for analysis
-        
-        // TODO: Run alert engine on new set of data
+        AnalysisEngine primaryAnalysisEngine = new AnalysisEngine(primaryActivityEngine.generatedDays);
+        primaryAnalysisEngine.analyze();
+        primaryAnalysisEngine.saveStatsFile();
         
         // TODO: Use a loop to keep 'training' the IDS
         while (!isProgramGoingToQuit) {
+            Scanner s = new Scanner(System.in);
+            String newStatsFileName = "";
+            int newNumberOfDays = -1;
             
-            // TODO: Read in another set of Stats.txt and number of days
+            // Read in new stats file name
+            while (newStatsFileName.equals("")) {
+                System.out.print("Enter the name of the file containing the next set of event stats data: ");
+                newStatsFileName = s.nextLine();
+                System.out.println();
+            }
             
-            // TODO: Perform process again
+            // Read the new number of days
+            while (newNumberOfDays == -1) {
+                System.out.print("Enter the number of days of activity to simulate: ");
+                newNumberOfDays = s.nextInt();
+            }
+            
+            // Clear previous set of stats
+            for (Event event : inputEvents) {
+                event.stats = new Stats();
+            }
+            
+            System.out.print("Loading new event stats data...");
+            statsLines = loadStats(inputEvents, newStatsFileName);
+            System.out.println(" done.\n");
+            
+            // Check consistency between events and event stats file
+            System.out.println("Checking for inconsistencies...");
+            consistencyCheckReport = checkConsistency(eventsLines, statsLines);
+            if (consistencyCheckReport.equals("")) {
+                System.out.println("Consistency check complete. No inconsistencies found.");
+            } else {
+                System.out.println("Consistency check failed. Inconsistencies found:\n\n" + consistencyCheckReport + "\n");
+            }
+            
+            // Run activity engine again to generate new set of data for analysis
+            ActivityEngine secondaryActivityEngine = new ActivityEngine(inputEvents, newNumberOfDays);
+            secondaryActivityEngine.generateEvents();
+            
+            // Run analysis engine on new set of generated activity data
+            System.out.println("Generating analyzed data based on new 'live' data...");
+            AnalysisEngine secondaryAnalysisEngine = new AnalysisEngine(secondaryActivityEngine.generatedDays);
+            secondaryAnalysisEngine.analyze();
+            secondaryAnalysisEngine.saveStatsFile();
+            
+            // Run alert engine on new set of data
+            AlertEngine alertEngine = new AlertEngine(inputEvents,
+                                                      secondaryActivityEngine.generatedDays,
+                                                      primaryAnalysisEngine.averages,
+                                                      primaryAnalysisEngine.stdDevs);
+            alertEngine.genDailyCount();
+            alertEngine.detectAnomaly();
             
             System.out.print("Continue analyzing another set of data? (Y/N) ");
             
@@ -171,8 +193,32 @@ class IDS {
         return inconsistencies;
     }
     
-    public static void saveDayFile(Day day, String outputFileName) {
-        
+    public static String[] loadStats(Event[] events, String statsFileName) {
+        String[] statsLines = new String[]{};
+        try {
+            statsLines = new FileArrayProvider().readLines(Paths.get(statsFileName).normalize().toString());
+            for (String line : statsLines) {
+                // Parse line split by colons
+                String[] lineSplitByColon = line.split(":");
+                if (lineSplitByColon.length == 3) {
+                    String eventName = lineSplitByColon[0];
+                    String eventMean = lineSplitByColon[1];
+                    String eventStdDev = lineSplitByColon[2];
+                    Stats newStats = new Stats(Double.parseDouble(eventMean),
+                                               Double.parseDouble(eventStdDev));
+                    for (Event event : events) {
+                        if (event.name.equals(eventName)) {
+                            event.stats = newStats;
+                            break;
+                        }
+                    }
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("\n!!! Could not parse event stats data!\n\nStack trace:\n");
+            e.printStackTrace();
+        }
+        return statsLines;
     }
     
     private static void clearScreen() {
