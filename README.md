@@ -3,9 +3,11 @@
 
 ## Compilation & Execution
 To compile IDS, use the below command:
+
     javac *.java
 
 To run IDS, use the below command:
+
     java IDS <events_file> <stats_file> <number_of_days>
 
 Alternatively, use the RunTest (macOS/Unix-based systems) or RunTest.bat (Windows) scripts to automatically compile and execute IDS.
@@ -23,14 +25,14 @@ IDS does **not** work on systems that do not support the SHA1PRNG secure random 
 ## Stats.txt
 
 ### Format
-Days
-EventName:Mean:StandardDeviation
+    Days
+    EventName:Mean:StandardDeviation
 
 ## Events.txt
 
 ### Format
-Days
-EventName:Continuous/Discrete:MinimumAllowed:MaximumAllowed:WeightOfAnomalyCount
+    Days
+    EventName:Continuous/Discrete:MinimumAllowed:MaximumAllowed:WeightOfAnomalyCount
 
 ## Activity Engine
 Must take in input: events list, stats list, number of days to generate
