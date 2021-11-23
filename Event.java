@@ -20,7 +20,7 @@ public class Event {
         this.info = info;
         this.stats = stats;
         try {
-            rand = SecureRandom.getInstance("NativePRNG");
+            rand = SecureRandom.getInstance("SHA1PRNG");
         } catch (NoSuchAlgorithmException e) {
             System.out.println("!!! This device does not support secure random number generation!");
         }
