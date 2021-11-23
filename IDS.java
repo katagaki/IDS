@@ -77,6 +77,7 @@ class IDS {
         AnalysisEngine primaryAnalysisEngine = new AnalysisEngine(primaryActivityEngine.generatedDays);
         primaryAnalysisEngine.analyze();
         primaryAnalysisEngine.saveStatsFile();
+        primaryAnalysisEngine.saveDailyTotalsFile();
         System.out.println();
         
         // TODO: Use a loop to keep 'training' the IDS
@@ -125,6 +126,7 @@ class IDS {
             AnalysisEngine secondaryAnalysisEngine = new AnalysisEngine(secondaryActivityEngine.generatedDays);
             secondaryAnalysisEngine.analyze();
             secondaryAnalysisEngine.saveStatsFile();
+            secondaryAnalysisEngine.saveDailyTotalsFile();
             System.out.println();
             
             // Run alert engine on new set of data

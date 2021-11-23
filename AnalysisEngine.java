@@ -100,7 +100,7 @@ public class AnalysisEngine {
 	    
 	    // Save stats output to file
 		try {
-            String filename = getEpochTimeString() + "-Stats.txt";
+            String filename = "Stats-" + getEpochTimeString() + ".txt";
 	        FileWriter writer = new FileWriter(filename);
 	        writer.append(output);
 	        writer.flush();	
@@ -111,6 +111,31 @@ public class AnalysisEngine {
 	    }
 
 	}
+    
+    public void saveDailyTotalsFile() {
+        
+         String output = "";
+         
+         // Generate and append event info to output
+         for (int i = 0; i < dailyTotals.length; i++) {
+             
+             String dailyTotalLine = Integer.toString(i + 1) + ":" + Double.toString(dailyTotals[i]);
+             output = output + dailyTotalLine + "\n";
+         }
+        
+        // Save daily totals output to file
+        try {
+            String filename = "DailyTotals-" + getEpochTimeString() + ".txt";
+            FileWriter writer = new FileWriter(filename);
+            writer.append(output);
+            writer.flush();
+            writer.close();
+            System.out.println("Daily totals data saved to '" + filename + "'.");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
     
 	// From https://www.programiz.com/java-programming/examples/standard-deviation
 	public Double stdDev(Double numArray[])
