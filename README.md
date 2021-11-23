@@ -35,10 +35,10 @@ IDS does **not** work on systems that do not support the SHA1PRNG secure random 
     EventName:Continuous/Discrete:MinimumAllowed:MaximumAllowed:WeightOfAnomalyCount
 
 ## Activity Engine
-Must take in input: events list, stats list, number of days to generate
-Initial data takes in number of days from command line argument, programmatically pass to Activity Engine
-Subsequent runs will take in number of days and stats from user input
-After generation, save events in separate day files, and save the new statistics in a new stats file
+1. Must take in input: events list, stats list, number of days to generate
+2. Initial data takes in number of days from command line argument, programmatically pass to Activity Engine
+3. Subsequent runs will take in number of days and stats from user input
+4. After generation, save events in separate day files, and save the new statistics in a new stats file
 
 ### Generate Discrete Event
 
@@ -73,10 +73,10 @@ Calculate analysis of event stat in day
     return abs(avg - event[day].data) / stdDev * event[day].weight
 
 ## Alert Engine
-Read in new stats file
-Read in number of days to generate live data
-Run Activity Engine against new stats file and new number of days
-Run Analysis Engine against newly generated 'live' data
+1. Read in new stats file
+2. Read in number of days to generate live data
+3. Run Activity Engine against new stats file and new number of days
+4. Run Analysis Engine against newly generated 'live' data
     
 ### Calculate threshold
     
