@@ -133,6 +133,7 @@ class IDS {
                                                       primaryAnalysisEngine.averages,
                                                       primaryAnalysisEngine.stdDevs);
             alertEngine.genDailyCount();
+            System.out.println("Threshold for alarm: " + Integer.toString(alertEngine.threshold));
             alertEngine.detectAnomaly();
             
             System.out.print("Continue analyzing another set of data? (Y/N) ");
