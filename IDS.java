@@ -61,7 +61,7 @@ class IDS {
         if (consistencyCheckReport.equals("")) {
             System.out.println("Consistency check complete. No inconsistencies found.");
         } else {
-            System.out.println("Consistency check failed. Inconsistencies found:\n\n" + consistencyCheckReport + "\n");
+            System.out.println("Consistency check failed. Inconsistencies found:\n\n" + consistencyCheckReport);
         }
         System.out.println();
         
@@ -113,9 +113,8 @@ class IDS {
             if (consistencyCheckReport.equals("")) {
                 System.out.println("Consistency check complete. No inconsistencies found.");
             } else {
-                System.out.println("Consistency check failed. Inconsistencies found:\n\n" + consistencyCheckReport + "\n");
+                System.out.println("Consistency check failed. Inconsistencies found:\n\n" + consistencyCheckReport);
             }
-            System.out.println();
             
             // Run activity engine again to generate new set of data for analysis
             ActivityEngine secondaryActivityEngine = new ActivityEngine(inputEvents, newNumberOfDays);
@@ -195,7 +194,7 @@ class IDS {
         //       - Continous events must be 2 decimal places
         //       - All values must be positive
         
-        return inconsistencies;
+        return inconsistencies.trim();
     }
     
     public static String[] loadStats(Event[] events, String statsFileName) {
