@@ -1,7 +1,18 @@
 # IDS
 ## Intrusion detection analysis in Java.
 
-**CAUTION: This code is provided AS-IS and should be considered an archive for reference purposes only. The code may contain errors or bugs that may not be fixed.**
+## Compilation & Execution
+To compile IDS, use the below command:
+    javac *.java
+
+To run IDS, use the below command:
+    java IDS <events_file> <stats_file> <number_of_days>
+
+Alternatively, use the RunTest (macOS/Unix-based systems) or RunTest.bat (Windows) scripts to automatically compile and execute IDS.
+
+## Supported Environments
+IDS has been tested against the below environments:
+* java 17 2021-09-14 LTS with Java(TM) SE Runtime Environment (build 17+35-LTS-2724) running on macOS Monterey 12.0.1
 
 ## Stats.txt
 
