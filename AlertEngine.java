@@ -48,8 +48,8 @@ class AlertEngine{
 			else{
 				System.out.println("!!! Anomaly Detected");
 			}
-			System.out.println();
 		}
+        System.out.println();
 	}
 	
 }

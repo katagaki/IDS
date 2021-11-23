@@ -53,7 +53,7 @@ class IDS {
         statsLines = loadStats(inputEvents, statsFileName);
         System.out.println(" done.\n");
         
-        System.out.println("Number of events loaded: " + String.valueOf(inputEvents.length));
+        System.out.println("Number of events loaded: " + String.valueOf(inputEvents.length) + "\n");
         
         // Check consistency between events and event stats file
         System.out.println("Checking for inconsistencies...");
@@ -63,18 +63,21 @@ class IDS {
         } else {
             System.out.println("Consistency check failed. Inconsistencies found:\n\n" + consistencyCheckReport + "\n");
         }
+        System.out.println();
         
         // Generate 'baseline' data: the initial set of per-day event statistics that are considered acceptable
         System.out.println("Generating 'baseline' data...");
         ActivityEngine primaryActivityEngine = new ActivityEngine(inputEvents, numberOfDays);
         primaryActivityEngine.generateEvents();
         primaryActivityEngine.saveDayFiles();
+        System.out.println();
         
         // Run analysis engine on 'baseline' data
         System.out.println("Generating analyzed data based on 'baseline' data...");
         AnalysisEngine primaryAnalysisEngine = new AnalysisEngine(primaryActivityEngine.generatedDays);
         primaryAnalysisEngine.analyze();
         primaryAnalysisEngine.saveStatsFile();
+        System.out.println();
         
         // TODO: Use a loop to keep 'training' the IDS
         while (!isProgramGoingToQuit) {
@@ -86,7 +89,6 @@ class IDS {
             while (newStatsFileName.equals("")) {
                 System.out.print("Enter the name of the file containing the next set of event stats data: ");
                 newStatsFileName = s.nextLine();
-                System.out.println();
             }
             
             // Read the new number of days
@@ -94,6 +96,7 @@ class IDS {
                 System.out.print("Enter the number of days of activity to simulate: ");
                 newNumberOfDays = s.nextInt();
             }
+            System.out.println();
             
             // Clear previous set of stats
             for (Event event : inputEvents) {
@@ -112,6 +115,7 @@ class IDS {
             } else {
                 System.out.println("Consistency check failed. Inconsistencies found:\n\n" + consistencyCheckReport + "\n");
             }
+            System.out.println();
             
             // Run activity engine again to generate new set of data for analysis
             ActivityEngine secondaryActivityEngine = new ActivityEngine(inputEvents, newNumberOfDays);
@@ -122,6 +126,7 @@ class IDS {
             AnalysisEngine secondaryAnalysisEngine = new AnalysisEngine(secondaryActivityEngine.generatedDays);
             secondaryAnalysisEngine.analyze();
             secondaryAnalysisEngine.saveStatsFile();
+            System.out.println();
             
             // Run alert engine on new set of data
             AlertEngine alertEngine = new AlertEngine(inputEvents,
