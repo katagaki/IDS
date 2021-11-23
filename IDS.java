@@ -116,6 +116,7 @@ class IDS {
             } else {
                 System.out.println("Consistency check failed. Inconsistencies found:\n\n" + consistencyCheckReport);
             }
+            System.out.println();
             
             // Run activity engine again to generate new set of data for analysis
             ActivityEngine secondaryActivityEngine = new ActivityEngine(inputEvents, newNumberOfDays);
