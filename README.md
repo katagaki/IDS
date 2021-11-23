@@ -14,9 +14,11 @@ Alternatively, use the RunTest (macOS/Unix-based systems) or RunTest.bat (Window
 IDS has been tested against the below environments:
 * java 17 2021-09-14 LTS with Java(TM) SE Runtime Environment (build 17+35-LTS-2724) running on macOS Monterey 12.0.1
 
-IDS does **not** work on the below environments:
+IDS may **not** work on the below environments:
 * openjdk 11.0.12 2021-07-20 with OpenJDK Runtime Environment Temurin-11.0.12+7 (build 11.0.12+7)
 * java 15.0.2 2021-01-19 with Java(TM) SE Runtime Environment (build 15.0.2+7-27)
+
+IDS does **not** work on systems that do not support the SHA1PRNG secure random number generator.
 
 ## Stats.txt
 
